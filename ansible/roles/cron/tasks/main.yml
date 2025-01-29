@@ -1,0 +1,25 @@
+---
+
+- name: Install cronie through dnf
+  dnf:
+    name: cronie
+    state: latest
+
+- name: Start and enable crond service
+  systemd:
+    name: crond
+    state: started
+    enabled: yes
+
+- name: docker-cleanup script
+  copy:
+    src: "docker-cleanup.sh"
+    dest: "/usr/local/bin/docker-cleanup.sh"
+    mode: 0755
+
+- name: Create cron job for docker-cleanup script
+  cron:
+    name: "docker-cleanup"
+    minute: "{{ run_interval_mins }}"
+    job: "/usr/local/bin/docker-cleanup.sh {{ max_container_ttl }} {{ docker_stop_wait_time }}"
+    state: present
