@@ -11,7 +11,7 @@
     state: started
     enabled: yes
 
-- name: docker-cleanup script
+- name: Install script for docker cleanup
   copy:
     src: "docker-cleanup.sh"
     dest: "/usr/local/bin/docker-cleanup.sh"
@@ -23,3 +23,6 @@
     minute: "{{ run_interval_mins }}"
     job: "/usr/local/bin/docker-cleanup.sh {{ max_container_ttl }} {{ docker_stop_wait_time }}"
     state: present
+
+- name: Clean DNF cache
+  command: dnf clean all
