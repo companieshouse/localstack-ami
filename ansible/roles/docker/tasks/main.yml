@@ -1,0 +1,24 @@
+---
+
+- name: configure / Update dnf packages
+  dnf:
+    name: '*'
+    state: latest
+    update_cache: yes
+
+- name: install docker using dnf
+  dnf:
+    name: docker
+    state: latest
+
+- name: Add the ec2-user to the docker group
+  ansible.builtin.user:
+    name: ec2-user
+    groups: docker
+    append: yes
+
+- name: service docker
+  service:
+    name: docker
+    state: started
+    enabled: yes

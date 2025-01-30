@@ -3,3 +3,5 @@
 ._*
 
 development/*.json
+
+/ansible/test/.vagrant/

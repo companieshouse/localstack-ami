@@ -1,1 +1,8 @@
 ---
+
+- hosts: docker
+  become: true
+  gather_facts: yes
+  roles:
+    - docker
+    - cron
