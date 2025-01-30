@@ -1,6 +1,7 @@
 # Testing docker-ami
 
-pre-requisites
+## Pre-requisites
+
 - Have vagrant installation
 
 To test, run `vagrant up` from this directory. This will create a virtual machine and automatically run the Ansible provisioner.
