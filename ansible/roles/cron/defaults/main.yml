@@ -1,0 +1,5 @@
+---
+
+run_image_prune_min: 10
+run_image_prune_hour: 03
+run_image_prune_weekday: 0

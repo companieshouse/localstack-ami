@@ -24,5 +24,14 @@
     job: "/usr/local/bin/docker-cleanup.sh {{ max_container_ttl }} {{ docker_stop_wait_time }}"
     state: present
 
+- name: Create cron job for weekly full Docker image cleanup
+  cron:
+    name: "docker-image-cleanup"
+    minute: "{{ run_image_prune_min }}"
+    hour: "{{ run_image_prune_hour }}"
+    weekday: "{{ run_image_prune_weekday }}"
+    job: "/usr/bin/docker image prune -a -f"
+    state: present
+
 - name: Clean DNF cache
   command: dnf clean all
