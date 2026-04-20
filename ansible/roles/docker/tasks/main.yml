@@ -6,11 +6,6 @@
     state: latest
     update_cache: true
 
-- name: Install jq using dnf
-  ansible.builtin.dnf:
-    name: jq
-    state: latest
-
 - name: Install docker using dnf
   ansible.builtin.dnf:
     name: docker

@@ -1,5 +1,10 @@
 ---
 
+- name: Install jq using dnf
+  ansible.builtin.dnf:
+    name: jq
+    state: latest
+
 - name: Download chs-dev install script
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/companieshouse/chs-dev/main/install.sh
