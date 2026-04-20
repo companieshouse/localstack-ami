@@ -35,7 +35,7 @@
   ansible.builtin.user:
     name: ec2-user
     groups: docker
-    append: yes
+    append: true
 
 - name: service docker
   ansible.builtin.service:
