@@ -1,15 +1,15 @@
 ---
 
 - name: Download chs-dev install script
-  get_url:
+  ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/companieshouse/chs-dev/main/install.sh
     dest: /tmp/install-chs-dev.sh
     mode: '0755'
 
 - name: Install chs-dev
-  command: bash /tmp/install-chs-dev.sh -f -s /usr/local/bin
+  ansible.builtin.command: bash /tmp/install-chs-dev.sh -f -s /usr/local/bin
 
 - name: Remove chs-dev install script
-  file:
+  ansible.builtin.file:
     path: /tmp/install-chs-dev.sh
     state: absent

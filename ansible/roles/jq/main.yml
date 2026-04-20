@@ -1,4 +1,0 @@
-- name: Install jq
-  dnf:
-    name: jq
-    state: latest

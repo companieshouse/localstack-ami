@@ -1,39 +1,40 @@
 ---
 
-- name: configure / Update dnf packages
-  dnf:
+- name: Configure / Update dnf packages
+  ansible.builtin.dnf:
     name: '*'
     state: latest
-    update_cache: yes
+    update_cache: true
 
-- name: install docker using dnf
-  dnf:
+- name: Install jq using dnf
+  ansible.builtin.dnf:
+    name: jq
+    state: latest
+
+- name: Install docker using dnf
+  ansible.builtin.dnf:
     name: docker
     state: latest
 
 - name: Configure sysctl for docker
   ansible.builtin.copy:
+    src: 50-docker.conf
     dest: /etc/sysctl.d/50-docker.conf
     owner: root
     group: root
     mode: '0644'
-    content: |
-      ## Tunables to support docker images
-      vm.max_map_count=262144
 
 - name: Reload sysctl settings
-  command: sysctl --system
+  ansible.builtin.command: sysctl --system
 
-- name: Configure docker
-  ansible.builtin.copy:
+- name: Configure docker service
+  ansible.builtin.template:
+    src: docker.conf.j2
     dest: /etc/systemd/system/docker.service.d/docker.conf
     owner: root
     group: root
-    mode: 0600
-    content: |
-      [Service]
-      ExecStart=
-      ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:${docker_port}
+    mode: '0600'
+  notify: Reload systemd
 
 - name: Add the ec2-user to the docker group
   ansible.builtin.user:
@@ -42,7 +43,7 @@
     append: yes
 
 - name: service docker
-  service:
+  ansible.builtin.service:
     name: docker
     state: started
-    enabled: yes
+    enabled: true
