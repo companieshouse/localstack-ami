@@ -11,6 +11,30 @@
     name: docker
     state: latest
 
+- name: Configure sysctl for docker
+  ansible.builtin.copy:
+    dest: /etc/sysctl.d/50-docker.conf
+    owner: root
+    group: root
+    mode: '0644'
+    content: |
+      ## Tunables to support docker images
+      vm.max_map_count=262144
+
+- name: Reload sysctl settings
+  command: sysctl --system
+
+- name: Configure docker
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/docker.service.d/docker.conf
+    owner: root
+    group: root
+    mode: 0600
+    content: |
+      [Service]
+      ExecStart=
+      ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:${docker_port}
+
 - name: Add the ec2-user to the docker group
   ansible.builtin.user:
     name: ec2-user
