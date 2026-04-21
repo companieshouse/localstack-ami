@@ -18,9 +18,7 @@
     owner: root
     group: root
     mode: '0644'
-
-- name: Reload sysctl settings
-  ansible.builtin.command: sysctl --system
+  notify: Reload sysctl
 
 - name: Configure docker service
   ansible.builtin.template:
