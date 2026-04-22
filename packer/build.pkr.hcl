@@ -7,6 +7,8 @@ build {
     groups = [ "${var.configuration_group}" ]
     playbook_file = "${var.playbook_file_path}"
     extra_arguments  = [
+      "--scp-extra-args", "'-O'",
+      "-e", "ssh_username=${var.ssh_username}",
       "-e", "aws_region=${var.aws_region}"
     ]
   }
