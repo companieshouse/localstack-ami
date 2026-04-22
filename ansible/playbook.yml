@@ -1,8 +1,8 @@
 ---
 
-- hosts: docker
+- hosts: localstack
   become: true
-  gather_facts: yes
+  gather_facts: false
   roles:
     - docker
     - chs-dev

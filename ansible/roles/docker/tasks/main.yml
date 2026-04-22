@@ -20,6 +20,14 @@
     mode: '0644'
   notify: Reload sysctl
 
+- name: Ensure docker.service.d directory exists
+  ansible.builtin.file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
 - name: Configure docker service
   ansible.builtin.template:
     src: docker.conf.j2
