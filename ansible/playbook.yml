@@ -4,6 +4,6 @@
   become: true
   gather_facts: false
   roles:
-    - docker
     - chs_dev
+    - docker
     - cron
