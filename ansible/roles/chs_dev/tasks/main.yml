@@ -12,7 +12,7 @@
     mode: '0755'
 
 - name: Install chs-dev
-  ansible.builtin.command: bash /tmp/install-chs-dev.sh -f -s /usr/local/bin
+  ansible.builtin.command: bash /tmp/install-chs-dev.sh -f -s /usr/local/bin -d /usr/local/lib/chs-dev
 
 - name: Remove chs-dev install script
   ansible.builtin.file:
