@@ -5,5 +5,5 @@
   gather_facts: false
   roles:
     - docker
-    - chs-dev
+    - chs_dev
     - cron
