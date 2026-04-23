@@ -12,7 +12,16 @@
     mode: '0755'
 
 - name: Install chs-dev
-  ansible.builtin.command: bash /tmp/install-chs-dev.sh -f -s /usr/local/bin
+  ansible.builtin.command: bash /tmp/install-chs-dev.sh -f -S
+  become: true
+  become_user: ec2-user
+
+- name: Link chs-dev into /usr/local/bin
+  ansible.builtin.file:
+    src: /home/ec2-user/.chs-dev/bin/chs-dev
+    dest: /usr/local/bin/chs-dev
+    state: link
+  become: true
 
 - name: Remove chs-dev install script
   ansible.builtin.file:
