@@ -43,7 +43,28 @@
     groups: docker
     append: true
 
-- name: service docker
+- name: Install amazon-ecr-credential-helper
+  ansible.builtin.dnf:
+    name: amazon-ecr-credential-helper
+    state: latest
+
+- name: Create .docker directory for ec2-user
+  ansible.builtin.file:
+    path: /home/ec2-user/.docker
+    state: directory
+    owner: ec2-user
+    group: ec2-user
+    mode: '0700'
+
+- name: Configure ECR credential helper
+  ansible.builtin.copy:
+    src: docker-config.json
+    dest: /home/ec2-user/.docker/config.json
+    owner: ec2-user
+    group: ec2-user
+    mode: '0600'
+
+- name: Start and enable docker service
   ansible.builtin.service:
     name: docker
     state: started
